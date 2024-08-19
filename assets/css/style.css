@@ -314,6 +314,7 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   overflow: hidden; /* Ensures content stays within the header */
   height: 100vh; /* Adjust the height as needed */
+  background-color: #121212;
   
 }
 
@@ -323,11 +324,17 @@ h1, h2, h3, h4, h5, h6 {
   top: 50%;
   transform: translateY(-50%);
   width: auto;
-  max-height: 80vh; /* Ensure the image does not exceed the header's height */
+  max-height: 70vh; /* Ensure the image does not exceed the header's height */
   border-radius: 10px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
   animation: float 6s ease-in-out infinite;
+  clip-path: inset(0 0 0 0); /* Ensures the image stays within the header */
+}
+
+.about-section {
+  position: relative;
+  z-index: 0; /* Lower z-index to keep the profile image in the header */
 }
 
 
