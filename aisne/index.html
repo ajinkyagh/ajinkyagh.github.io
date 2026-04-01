@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Appendix - AISNE Briefing Note</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 0 auto;
+    background: white;
+    padding: 0.55in 0.65in 0.45in;
+  }
+
+  @media print {
+    body { background: white; }
+    .page {
+      margin: 0;
+      padding: 0.5in 0.6in 0.4in;
+      box-shadow: none;
+      min-height: auto;
+    }
+    .bar-fill { transition: none !important; }
+  }
+
+  @media screen {
+    .page {
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      margin: 20px auto;
+      border-radius: 4px;
+    }
+  }
+
+  /* Header */
+  .header-title {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #1a365d;
+    margin-bottom: 4px;
+  }
+  .header-sub {
+    font-size: 8.5px;
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+  .header-rule {
+    border: none;
+    border-top: 1.5px solid #e2e8f0;
+    margin-bottom: 16px;
+  }
+
+  /* Section headers */
+  .section-num {
+    display: inline-block;
+    background: #1a365d;
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    border-radius: 4px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #1a365d;
+    margin-bottom: 3px;
+  }
+  .section-source {
+    font-size: 7.5px;
+    color: #94a3b8;
+    margin-bottom: 12px;
+    padding-left: 24px;
+  }
+
+  /* Bar chart */
+  .bar-chart { margin-bottom: 8px; }
+  .bar-row {
+    display: flex;
+    align-items: center;
+    height: 22px;
+    margin-bottom: 4px;
+    position: relative;
+  }
+  .bar-row:hover .bar-fill {
+    filter: brightness(1.1);
+  }
+  .bar-row:hover .bar-label,
+  .bar-row:hover .bar-value {
+    font-weight: 700;
+  }
+  .bar-label {
+    width: 95px;
+    text-align: right;
+    font-size: 8.5px;
+    color: #475569;
+    padding-right: 10px;
+    flex-shrink: 0;
+    transition: font-weight 0.15s;
+  }
+  .bar-label.highlight { color: #dc2626; font-weight: 600; }
+  .bar-track {
+    flex: 1;
+    height: 16px;
+    background: #f1f5f9;
+    border-radius: 4px;
+    position: relative;
+    overflow: visible;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+  .bar-fill.blue { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+  .bar-fill.dark-blue { background: linear-gradient(90deg, #1e40af, #3b82f6); }
+  .bar-fill.red { background: linear-gradient(90deg, #dc2626, #ef4444); }
+  .bar-fill.amber { background: linear-gradient(90deg, #d97706, #f59e0b); }
+  .bar-fill.light-blue { background: linear-gradient(90deg, #0ea5e9, #38bdf8); }
+  .bar-value {
+    width: 38px;
+    font-size: 9px;
+    font-weight: 600;
+    color: #475569;
+    padding-left: 8px;
+    flex-shrink: 0;
+    transition: font-weight 0.15s;
+  }
+  .bar-value.highlight { color: #dc2626; }
+
+  /* Reference line */
+  .avg-line {
+    position: absolute;
+    top: -2px;
+    bottom: -2px;
+    width: 1.5px;
+    background: #93c5fd;
+    z-index: 2;
+  }
+  .avg-line::after {
+    content: 'U.S. Avg';
+    position: absolute;
+    top: -12px;
+    left: 4px;
+    font-size: 6.5px;
+    color: #60a5fa;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* Annotation */
+  .annotation {
+    font-size: 8px;
+    font-weight: 600;
+    color: #dc2626;
+    margin-top: 6px;
+    margin-bottom: 18px;
+    padding-left: 2px;
+  }
+
+  /* Stat cards */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .stat-card {
+    border-radius: 6px;
+    padding: 10px 12px;
+    border: 1px solid #e2e8f0;
+    transition: transform 0.15s, box-shadow 0.15s;
+    cursor: default;
+  }
+  .stat-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .stat-card.red { background: #fef2f2; border-color: #fecaca; }
+  .stat-card.amber { background: #fffbeb; border-color: #fde68a; }
+  .stat-card.green { background: #f0fdf4; border-color: #bbf7d0; }
+  .stat-card .big-num {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .stat-card.red .big-num { color: #dc2626; }
+  .stat-card.amber .big-num { color: #d97706; }
+  .stat-card.green .big-num { color: #16a34a; }
+  .stat-card .desc {
+    font-size: 7.5px;
+    color: #475569;
+    line-height: 1.35;
+  }
+
+  /* Gap chart */
+  .gap-chart { margin-bottom: 8px; }
+  .gap-row {
+    display: flex;
+    align-items: center;
+    height: 20px;
+    margin-bottom: 5px;
+  }
+  .gap-row:hover .gap-fill { filter: brightness(1.1); }
+  .gap-row:hover .gap-label { font-weight: 600; }
+  .gap-label {
+    width: 215px;
+    text-align: right;
+    font-size: 7.5px;
+    color: #475569;
+    padding-right: 10px;
+    flex-shrink: 0;
+    transition: font-weight 0.15s;
+  }
+  .gap-track {
+    flex: 1;
+    height: 14px;
+    background: #f1f5f9;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .gap-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .gap-fill.red { background: linear-gradient(90deg, #dc2626, #ef4444); }
+  .gap-fill.amber { background: linear-gradient(90deg, #d97706, #f59e0b); }
+  .gap-fill.blue { background: linear-gradient(90deg, #0ea5e9, #38bdf8); }
+  .gap-value {
+    width: 35px;
+    font-size: 8.5px;
+    font-weight: 600;
+    color: #475569;
+    padding-left: 8px;
+    flex-shrink: 0;
+  }
+
+  /* Bracket annotation for gap */
+  .gap-bracket {
+    display: flex;
+    margin: 6px 0 4px 215px;
+    padding-left: 10px;
+    align-items: stretch;
+  }
+  .bracket-line {
+    width: 2px;
+    background: #cbd5e0;
+    border-radius: 1px;
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+  .bracket-text {
+    font-size: 7px;
+    color: #64748b;
+    line-height: 1.4;
+    font-style: italic;
+  }
+
+  /* Bottom box */
+  .bottom-box {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border: 1px solid #93c5fd;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 14px;
+  }
+  .bottom-box strong {
+    font-size: 9px;
+    color: #1a365d;
+  }
+  .bottom-box p {
+    font-size: 8px;
+    color: #334155;
+    margin-top: 3px;
+    line-height: 1.4;
+  }
+
+  /* Footer */
+  .footer {
+    font-size: 6.5px;
+    color: #94a3b8;
+    margin-top: 12px;
+    line-height: 1.5;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 6px;
+  }
+
+  /* Tooltip */
+  .tooltip {
+    position: relative;
+  }
+  .tooltip .tip-text {
+    visibility: hidden;
+    background: #1e293b;
+    color: white;
+    font-size: 7.5px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 10;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .tooltip:hover .tip-text {
+    visibility: visible;
+    opacity: 1;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <!-- HEADER -->
+  <div class="header-title">Data Appendix: New England Independent School Challenges</div>
+  <div class="header-sub">Companion to Briefing Note &nbsp;|&nbsp; Prepared by Ajinkya Ghorpade &nbsp;|&nbsp; March 2026</div>
+  <hr class="header-rule">
+
+  <!-- SECTION 1: FERTILITY RATES -->
+  <div class="section-title"><span class="section-num">1</span> New England Fertility Rates vs. National Average (2023)</div>
+  <div class="section-source">General fertility rate: births per 1,000 women aged 15–44 &nbsp;|&nbsp; Source: CDC National Center for Health Statistics, March of Dimes PeriStats</div>
+
+  <div class="bar-chart" style="position: relative;">
+    <div class="bar-row tooltip">
+      <div class="bar-label">U.S. Average</div>
+      <div class="bar-track">
+        <div class="bar-fill blue" style="width: 77.7%"></div>
+      </div>
+      <div class="bar-value">54.4</div>
+      <span class="tip-text">National GFR: 54.4 per 1,000 women (2023 CDC final)</span>
+    </div>
+
+    <div class="bar-row tooltip">
+      <div class="bar-label">Connecticut</div>
+      <div class="bar-track">
+        <div class="bar-fill dark-blue" style="width: 70.9%"></div>
+      </div>
+      <div class="bar-value">49.6</div>
+      <span class="tip-text">34,559 births in 2023 (March of Dimes PeriStats)</span>
+    </div>
+
+    <div class="bar-row tooltip">
+      <div class="bar-label">Massachusetts</div>
+      <div class="bar-track">
+        <div class="bar-fill dark-blue" style="width: 67.7%"></div>
+      </div>
+      <div class="bar-value">47.4</div>
+      <span class="tip-text">67,093 births in 2023 (March of Dimes PeriStats)</span>
+    </div>
+
+    <div class="bar-row tooltip">
+      <div class="bar-label">Maine</div>
+      <div class="bar-track">
+        <div class="bar-fill dark-blue" style="width: 67.1%"></div>
+      </div>
+      <div class="bar-value">47.0</div>
+      <span class="tip-text">11,627 births in 2023 (March of Dimes PeriStats)</span>
+    </div>
+
+    <div class="bar-row tooltip">
+      <div class="bar-label">New Hampshire</div>
+      <div class="bar-track">
+        <div class="bar-fill dark-blue" style="width: 66.9%"></div>
+      </div>
+      <div class="bar-value">46.8</div>
+      <span class="tip-text">11,761 births in 2024: lowest in modern history</span>
+    </div>
+
+    <div class="bar-row tooltip">
+      <div class="bar-label highlight">Rhode Island</div>
+      <div class="bar-track">
+        <div class="bar-fill red" style="width: 64.6%"></div>
+      </div>
+      <div class="bar-value highlight">45.2</div>
+      <span class="tip-text">2nd lowest fertility rate in the entire U.S.</span>
+    </div>
+
+    <div class="bar-row tooltip">
+      <div class="bar-label highlight">Vermont</div>
+      <div class="bar-track">
+        <div class="bar-fill red" style="width: 60.1%"></div>
+      </div>
+      <div class="bar-value highlight">42.1</div>
+      <span class="tip-text">Lowest fertility rate in the entire U.S. Only 5,065 births in 2023.</span>
+    </div>
+  </div>
+
+  <div class="annotation">All six New England states fall below the national average. Vermont and Rhode Island rank lowest and 2nd-lowest nationally.</div>
+
+  <!-- SECTION 2: KEY METRICS -->
+  <div class="section-title"><span class="section-num">2</span> Key Enrollment and Financial Indicators</div>
+  <div class="section-source">Sources: WICHE (Dec 2024), NBOA Financial State of Industry (2024), Federal Reserve Bank of Boston, Carsey School / UNH, CDC NCHS</div>
+
+  <div class="cards-grid">
+    <div class="stat-card red tooltip">
+      <div class="big-num">~23%</div>
+      <div class="desc">Projected decline in private HS graduates (New England, by 2041)</div>
+      <span class="tip-text">WICHE Knocking at the College Door, 11th Ed.</span>
+    </div>
+    <div class="stat-card amber tooltip">
+      <div class="big-num">17%</div>
+      <div class="desc">Projected decline in all HS graduates (Northeast region, by 2041)</div>
+      <span class="tip-text">Tied with Midwest for steepest regional drop</span>
+    </div>
+    <div class="stat-card red tooltip">
+      <div class="big-num">32</div>
+      <div class="desc">NE four-year colleges closed or merged in the last decade</div>
+      <span class="tip-text">12 since 2020. MA and VT hit hardest.</span>
+    </div>
+    <div class="stat-card amber tooltip">
+      <div class="big-num">82¢/$1</div>
+      <div class="desc">Net tuition collected per dollar after discounting</div>
+      <span class="tip-text">NBOA: 68% of schools saw discount rate increase</span>
+    </div>
+    <div class="stat-card red tooltip">
+      <div class="big-num">121,800</div>
+      <div class="desc">Net domestic out-migration from New England (2020–2025)</div>
+      <span class="tip-text">Carsey School, UNH. MA alone lost ~290,000.</span>
+    </div>
+    <div class="stat-card red tooltip">
+      <div class="big-num">11,761</div>
+      <div class="desc">NH births in 2024: lowest in modern history</div>
+      <span class="tip-text">16% decline from 30 years ago despite 200K population gain</span>
+    </div>
+  </div>
+
+  <!-- SECTION 3: AI GAP -->
+  <div class="section-title"><span class="section-num">3</span> AI in K-12: The Adoption–Governance Gap</div>
+  <div class="section-source">Sources: College Board (May 2025), RAND Corporation (Spring 2025), Veracross Independent School Survey</div>
+
+  <div class="gap-chart">
+    <div class="gap-row tooltip">
+      <div class="gap-label">Students using AI for schoolwork</div>
+      <div class="gap-track"><div class="gap-fill red" style="width: 84%"></div></div>
+      <div class="gap-value">84%</div>
+      <span class="tip-text">College Board, May 2025</span>
+    </div>
+    <div class="gap-row tooltip">
+      <div class="gap-label">Teachers using AI for instruction</div>
+      <div class="gap-track"><div class="gap-fill amber" style="width: 53%"></div></div>
+      <div class="gap-value">53%</div>
+      <span class="tip-text">RAND Corporation survey, Spring 2025</span>
+    </div>
+
+    <div class="gap-bracket">
+      <div class="bracket-line"></div>
+      <div class="bracket-text">Below this line: governance and policy coverage</div>
+    </div>
+
+    <div class="gap-row tooltip">
+      <div class="gap-label">Principals with any school AI policy</div>
+      <div class="gap-track"><div class="gap-fill blue" style="width: 45%"></div></div>
+      <div class="gap-value">45%</div>
+      <span class="tip-text">RAND survey panels, Spring 2025</span>
+    </div>
+    <div class="gap-row tooltip">
+      <div class="gap-label">Independent schools with AI integrity policy</div>
+      <div class="gap-track"><div class="gap-fill blue" style="width: 41%"></div></div>
+      <div class="gap-value">41%</div>
+      <span class="tip-text">Veracross independent school survey</span>
+    </div>
+    <div class="gap-row tooltip">
+      <div class="gap-label">Teachers with AI academic integrity policies</div>
+      <div class="gap-track"><div class="gap-fill blue" style="width: 34%"></div></div>
+      <div class="gap-value">34%</div>
+      <span class="tip-text">RAND: &gt;80% of students say teachers never taught AI use</span>
+    </div>
+  </div>
+
+  <div class="annotation">84% of students use AI for schoolwork, but fewer than half of schools have any policy to govern it.</div>
+
+  <!-- BOTTOM BOX -->
+  <div class="bottom-box">
+    <strong>Implication for AISNE</strong>
+    <p>Both challenges demand the same response: regional data infrastructure that helps 275 member schools make decisions collectively, rather than navigating enrollment pressure and AI governance in isolation. Expanded Pulse Points benchmarking, model AI policies, and disaggregated enrollment projections would turn AISNE's convening role into a strategic advantage for every member school.</p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    Sources: CDC NCHS Births: Final Data for 2023 (NVSR Vol. 74, No. 1); March of Dimes PeriStats; WICHE Knocking at the College Door, 11th Edition (Dec 2024);
+    NBOA 2024 Financial State of the Industry; Carsey School of Public Policy, UNH; RAND Corporation AI Survey Panels (2025); College Board (May 2025); Veracross Survey
+  </div>
+</div>
+
+<script>
+  // Animate bars on load
+  document.addEventListener('DOMContentLoaded', () => {
+    const fills = document.querySelectorAll('.bar-fill, .gap-fill');
+    fills.forEach(f => {
+      const target = f.style.width;
+      f.style.width = '0%';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          f.style.width = target;
+        });
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
